@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\FeauturedController;
 use App\Http\Controllers\Api\ProjectsController;
+use App\Http\Controllers\Api\TDBController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,14 @@ Route::get('/projects', [ProjectsController::class, 'list'])->name('Төслий
 
 // Config
 Route::get('/feautured', [FeauturedController::class, 'get'])->name('Feautured Post');
+
+// TDB
+Route::get('/tdb', function (Request $request) {
+    return [
+        'status' => 500,
+        'success' => false,
+        'message' => 'Something wrong.'
+    ];
+});
+Route::post('/tdb', [TDBController::class, 'req'])->name('TDB Bank Service');
+
