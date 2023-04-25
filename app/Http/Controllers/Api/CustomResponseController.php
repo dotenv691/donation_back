@@ -47,4 +47,13 @@ class CustomResponseController extends Controller
     // echo 'ShopOrderId: '.$array['ShopOrderId']."<br>";
         // return redirect()->to('http://localhost:3000/donate-now?status=error');
     }
+
+    public function paymentapprove(Request $request) {
+        echo 'approve';
+        echo '<pre>' . var_export($request, true) . '</pre>';
+    }
+    public function paymentreject(Request $request) {
+        echo 'reject';
+        echo '<pre>' . var_export($request, true) . '</pre>';
+    }
 }
