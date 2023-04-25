@@ -12,7 +12,7 @@ class CustomResponseController extends Controller
     }
     public function get(Request $request) {
         echo 'reqs';
-        $xmlmsg = $_POST["xmlmsg"];
+        $xmlmsg = $request->xmlmsg;
 echo $xmlmsg;   
         // $xml_data = $request->xmlmsg;
         // $xmlmsg = str_replace("\\\"","\"",$xml_data);
