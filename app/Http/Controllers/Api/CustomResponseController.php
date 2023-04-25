@@ -65,7 +65,7 @@ class CustomResponseController extends Controller
         $json = json_encode($xml);
         $array = json_decode($json,TRUE);
         foreach($array as $arr) {
-            echo $arr;
+            var_dump($arr);
         }
 
         $donate->where('id', $array['ShopOrderId'])->update([
