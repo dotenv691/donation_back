@@ -69,9 +69,9 @@ class CustomResponseController extends Controller
             echo '<pre>' . var_export($arr, true) . '</pre>';
         }
 
-        $donate->where('id', $array['OrderId'])->update([
-            'verf' => 'REJECTED',
-        ]);
+        // $donate->where('id', $array['OrderId'])->update([
+        //     'verf' => 'REJECTED',
+        // ]);
         echo 'error!';
         // return redirect()->to('http://localhost:3000/donate-now?id='.$array["ShopOrderId"]);
     }
