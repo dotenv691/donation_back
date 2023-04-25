@@ -12,7 +12,7 @@ class CustomResponseController extends Controller
     }
     public function get(Request $request) {
         echo 'reqs ========> ';
-        echo '<pre>' . var_export($request, true) . '</pre>';
+        echo '<pre>' . var_export($request->xmlmsg, true) . '</pre>';
 // echo $xmlmsg;   
         // $xml_data = $request->xmlmsg;
         // $xmlmsg = str_replace("\\\"","\"",$xml_data);
