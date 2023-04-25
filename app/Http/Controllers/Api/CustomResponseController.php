@@ -42,8 +42,7 @@ class CustomResponseController extends Controller
         $array = json_decode($json,TRUE);
 
         // update to server
-        $donate->where('id', $array['ShopOrderId']);
-        $donate->update([
+        $donate->where('id', $array['ShopOrderId'])->update([
             'type' => $array['MerchantTranID'],
             'value' => $array['PurchaseAmountScr'],
             'card_number' => $array['PAN'],
@@ -51,7 +50,7 @@ class CustomResponseController extends Controller
             'verf' => $array['OrderStatus'],
             'name' => $array['CurrencyScr'],
         ]);
-        $info = $donate->first();
+        $info = $donate->where('id', $array['ShopOrderId'])->first();
 
         echo $info;
     }
