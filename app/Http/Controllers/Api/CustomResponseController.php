@@ -8,28 +8,33 @@ use App\Models\Donate;
 
 class CustomResponseController extends Controller
 {
-    public function index() {
-        return redirect()->to('http://localhost:3000/donate-now?status=error');
-    }
-    public function get(Request $request) {
-        // echo 'reqs ========> ';
-        // echo '<pre>' . var_export($request->xmlmsg, true) . '</pre>';
-// // echo $xmlmsg;   
-        // $xml_data = $request->xmlmsg;
-        // $xmlmsg = str_replace("\\\"","\"",$xml_data);
-        // $xml = simplexml_load_string($xmlmsg, "SimpleXMLElement", LIBXML_NOCDATA);
-        // $json = json_encode($xml);
-        // $array = json_decode($json,TRUE);
-        // var_dump($array);
+    public function index(Request $request, Donate $donate) {
 
-        $xmlmsg = $_POST;
-        print_r($request);
-    // $xmlmsg = str_replace("\\\"","\"",$xmlmsg);
-    // $xml = simplexml_load_string($xmlmsg, "SimpleXMLElement", LIBXML_NOCDATA);
-    // $json = json_encode($xml);
-    // $array = json_decode($json,TRUE);
-    
-        // return redirect()->to('http://localhost:3000/donate-now?status=error');
+        // parse xml
+        if(!$request->id || $donate->where('id', $a->id)->count() != 1) {
+            return [
+                'status' => '200',
+                'success' => false,
+                'message' => 'Bad request'
+            ];
+        }
+        $info = $donate->where('id', $request->id)->first();
+        if($info->hasShow == 0 && $info->verf == 'APPROVED') {
+            Donate::where('id', $request->id)->update([
+                'hasShow' => 1
+            ]);
+            return [
+                'status' => '200',
+                'success' => true,
+                'data' => $info
+            ];
+        } else {
+            return [
+                'status' => '200',
+                'success' => false,
+                'message' => 'There was an error connecting to the bank'
+            ];
+        }
     }
 
     public function paymentapprove(Request $request, Donate $donate) {
@@ -50,10 +55,12 @@ class CustomResponseController extends Controller
             'verf' => $array['OrderStatus'],
             'name' => $array['CurrencyScr'],
         ]);
-        return redirect()->to('http://localhost:3000/donate-now')->with(['status' => 'success','message' => 'Your message']);
+        return redirect()->to('http://localhost:3000/donate-now?id='.$array["ShopOrderId"]);
     }
-    public function paymentreject(Request $request) {
-        echo 'reject';
-        echo '<pre>' . var_export($request, true) . '</pre>';
+    public function paymentreject(Request $request, Donate $donate) {
+        $donate->where('id', $array['ShopOrderId'])->update([
+            'verf' => $array['REJECTED'],
+        ]);
+        return redirect()->to('http://localhost:3000/donate-now?id='.$array["ShopOrderId"]);
     }
 }

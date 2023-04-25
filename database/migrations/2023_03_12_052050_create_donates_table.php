@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('exp');
             $table->string('verf');
             $table->string('name');
+            $table->integer('hasShow')->default(0);
             $table->timestamps();
         });
     }
