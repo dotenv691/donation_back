@@ -53,7 +53,7 @@ class CustomResponseController extends Controller
         ]);
         $info = $donate->first();
 
-        echo '<pre>' . var_export($info, true) . '</pre>';
+        echo $info;
     }
     public function paymentreject(Request $request) {
         echo 'reject';
