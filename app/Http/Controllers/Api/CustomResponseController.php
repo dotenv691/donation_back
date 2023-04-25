@@ -11,9 +11,9 @@ class CustomResponseController extends Controller
         return redirect()->to('http://localhost:3000/donate-now?status=error');
     }
     public function get(Request $request) {
-        echo 'reqs';
-        $xmlmsg = $request->xmlmsg;
-echo $xmlmsg;   
+        echo 'reqs ========> ';
+        echo '<pre>' . var_export($request, true) . '</pre>';
+// echo $xmlmsg;   
         // $xml_data = $request->xmlmsg;
         // $xmlmsg = str_replace("\\\"","\"",$xml_data);
         // $xml = simplexml_load_string($xmlmsg, "SimpleXMLElement", LIBXML_NOCDATA);
