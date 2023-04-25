@@ -33,7 +33,7 @@ Route::get('/projects', [ProjectsController::class, 'list'])->name('Төслий
 // Config
 Route::get('/feautured', [FeauturedController::class, 'get'])->name('Feautured Post');
 
-Route::get('/reqs', [CustomResponseController::class, 'index'])->name('All Res');
+Route::get('/reqs', [CustomResponseController::class, 'index'])->name('Get Res');
 Route::post('/reqs', [CustomResponseController::class, 'get'])->name('All Res');
 
 // TDB
