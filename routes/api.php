@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\FeauturedController;
 use App\Http\Controllers\Api\ProjectsController;
 use App\Http\Controllers\Api\TDBController;
+use App\Http\Controllers\Api\CustomResponseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,9 @@ Route::get('/projects', [ProjectsController::class, 'list'])->name('Төслий
 
 // Config
 Route::get('/feautured', [FeauturedController::class, 'get'])->name('Feautured Post');
+
+// Route::get('/reqs', [CustomResponseController::class, 'index'])->name('All Res');
+Route::post('/reqs', [CustomResponseController::class, 'get'])->name('All Res');
 
 // TDB
 Route::get('/tdb', function (Request $request) {
