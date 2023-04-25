@@ -64,9 +64,9 @@ class CustomResponseController extends Controller
         $xml = simplexml_load_string($xmlmsg, "SimpleXMLElement", LIBXML_NOCDATA);
         $json = json_encode($xml);
         $array = json_decode($json,TRUE);
-        
+
         $donate->where('id', $array['ShopOrderId'])->update([
-            'verf' => $array['REJECTED'],
+            'verf' => 'REJECTED',
         ]);
         return redirect()->to('http://localhost:3000/donate-now?id='.$array["ShopOrderId"]);
     }
