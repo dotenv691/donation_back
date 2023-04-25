@@ -67,6 +67,7 @@ class CustomResponseController extends Controller
         $new = simplexml_load_string($request->xmlmsg);
         $con = json_encode($new);
         $newArr = json_decode($con, true);
+        echo $newArr;
         if($donate->where('id', $newArr['ShopOrderId'])->count() != 1) {
             return redirect()->to('https://cancerfund.mn/donate-now');
         }
