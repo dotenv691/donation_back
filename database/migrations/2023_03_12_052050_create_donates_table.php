@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('brand')->default('VISA');
             $table->string('cardHolderName')->default('');
             $table->string('tranId')->default('');
-            $table->text('description')->default('');
+            $table->string('description')->default('');
             $table->timestamps();
         });
     }
