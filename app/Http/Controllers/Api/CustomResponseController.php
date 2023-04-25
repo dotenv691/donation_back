@@ -50,9 +50,7 @@ class CustomResponseController extends Controller
             'verf' => $array['OrderStatus'],
             'name' => $array['CurrencyScr'],
         ]);
-        $info = $donate->where('id', $array['ShopOrderId'])->first();
-
-        echo $info;
+        return redirect()->to('http://localhost:3000/donate-now')->with(['status' => 'success','message' => 'Your message']);
     }
     public function paymentreject(Request $request) {
         echo 'reject';
