@@ -65,7 +65,7 @@ class CustomResponseController extends Controller
     }
     public function paymentreject(Request $request, Donate $donate) {
         if(!$request->xmlmsg) {
-            return redirect()->to('https://cancerfund.mn/donate-now');
+            return redirect()->to('https://cancerfund.mn/donate-now?id=0');
         } else {
             $new = simplexml_load_string($request->xmlmsg);
             $con = json_encode($new);
