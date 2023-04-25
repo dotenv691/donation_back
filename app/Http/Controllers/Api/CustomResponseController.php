@@ -64,25 +64,28 @@ class CustomResponseController extends Controller
         return redirect()->to('https://cancerfund.mn/donate-now?id='.$array["ShopOrderId"]);
     }
     public function paymentreject(Request $request, Donate $donate) {
-        $new = simplexml_load_string($request->xmlmsg);
-        $con = json_encode($new);
-        $newArr = json_decode($con, true);
-        echo $newArr;
-        if($donate->where('id', $newArr['ShopOrderId'])->count() != 1) {
+        if(!$request->xmlmsg) {
             return redirect()->to('https://cancerfund.mn/donate-now');
+        } else {
+            $new = simplexml_load_string($request->xmlmsg);
+            $con = json_encode($new);
+            $newArr = json_decode($con, true);
+            if($donate->where('id', $newArr['ShopOrderId'])->count() != 1) {
+                return redirect()->to('https://cancerfund.mn/donate-now');
+            }
+            $donate->where('id', $newArr['ShopOrderId'])->update([
+                'verf' => $newArr['OrderStatus'],
+                'description' => $newArr['ResponseDescription'],
+                'value' => $newArr['PurchaseAmountScr'],
+                'tranId' => $newArr['TranId'],
+                'card_number' => $newArr['PAN'],
+                'cardHolderName' => $newArr['CardHolderName'],
+                'brand' => $newArr['Brand'],
+                'sessionId' => $newArr['SessionId'],
+                'lang' => $newArr['Language'],
+                'responseCode' => $newArr['ResponseCode'],
+            ]);
+            return redirect()->to('https://cancerfund.mn/donate-now?id='.$newArr['ShopOrderId']);
         }
-        $donate->where('id', $newArr['ShopOrderId'])->update([
-            'verf' => $newArr['OrderStatus'],
-            'description' => $newArr['ResponseDescription'],
-            'value' => $newArr['PurchaseAmountScr'],
-            'tranId' => $newArr['TranId'],
-            'card_number' => $newArr['PAN'],
-            'cardHolderName' => $newArr['CardHolderName'],
-            'brand' => $newArr['Brand'],
-            'sessionId' => $newArr['SessionId'],
-            'lang' => $newArr['Language'],
-            'responseCode' => $newArr['ResponseCode'],
-        ]);
-        return redirect()->to('https://cancerfund.mn/donate-now?id='.$newArr['ShopOrderId']);
     }
 }
