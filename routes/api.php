@@ -34,8 +34,8 @@ Route::get('/projects', [ProjectsController::class, 'list'])->name('Төслий
 Route::get('/feautured', [FeauturedController::class, 'get'])->name('Feautured Post');
 
 Route::get('/reqs', [CustomResponseController::class, 'index'])->name('Get Res');
-Route::post('/paymentapprove', [CustomResponseController::class, 'get'])->name('paymentapprove');
-Route::post('/paymentreject', [CustomResponseController::class, 'get'])->name('paymentreject');
+Route::post('/paymentapprove', [CustomResponseController::class, 'paymentapprove'])->name('paymentapprove');
+Route::post('/paymentreject', [CustomResponseController::class, 'paymentreject'])->name('paymentreject');
 
 // TDB
 Route::get('/tdb', function (Request $request) {
