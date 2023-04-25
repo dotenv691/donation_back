@@ -43,13 +43,14 @@ class CustomResponseController extends Controller
 
         // update to server
         $donate->where('id', $array['ShopOrderId']);
-        $donate->type = $array['MerchantTranID'];
-        $donate->value = $array['PurchaseAmountScr'];
-        $donate->card_number = $array['PAN'];
-        $donate->exp = $array['ApprovalCodeScr'];
-        $donate->verf = $array['OrderStatus'];
-        $donate->name = $array['CurrencyScr'];
-        $donate->update();
+        $donate->update([
+            'type' => $array['MerchantTranID'],
+            'value' => $array['PurchaseAmountScr'],
+            'card_number' => $array['PAN'],
+            'exp' => $array['ApprovalCodeScr'],
+            'verf' => $array['OrderStatus'],
+            'name' => $array['CurrencyScr'],
+        ]);
         $info = $donate->first();
 
         echo '<pre>' . var_export($info, true) . '</pre>';
