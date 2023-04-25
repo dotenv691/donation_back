@@ -55,7 +55,8 @@ class CustomResponseController extends Controller
             'verf' => $array['OrderStatus'],
             'name' => $array['CurrencyScr'],
         ]);
-        return redirect()->to('http://localhost:3000/donate-now?id='.$array["ShopOrderId"]);
+        echo 'success!';
+        // return redirect()->to('http://localhost:3000/donate-now?id='.$array["ShopOrderId"]);
     }
     public function paymentreject(Request $request, Donate $donate) {
         // parse xml
@@ -68,6 +69,7 @@ class CustomResponseController extends Controller
         $donate->where('id', $array['ShopOrderId'])->update([
             'verf' => 'REJECTED',
         ]);
-        return redirect()->to('http://localhost:3000/donate-now?id='.$array["ShopOrderId"]);
+        echo 'error!';
+        // return redirect()->to('http://localhost:3000/donate-now?id='.$array["ShopOrderId"]);
     }
 }
