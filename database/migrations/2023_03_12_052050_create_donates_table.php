@@ -22,6 +22,13 @@ return new class extends Migration
             $table->string('verf');
             $table->string('name');
             $table->integer('hasShow')->default(0);
+            $table->string('lang')->default('EN');
+            $table->string('responseCode')->default('000');
+            $table->string('sessionId')->nullable();
+            $table->string('brand')->default('VISA');
+            $table->string('cardHolderName')->default('');
+            $table->string('tranId')->default('');
+            $table->text('description')->default('');
             $table->timestamps();
         });
     }

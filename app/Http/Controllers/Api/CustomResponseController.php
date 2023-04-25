@@ -11,7 +11,7 @@ class CustomResponseController extends Controller
     public function index(Request $request, Donate $donate) {
 
         // parse xml
-        if(!$request->id || $donate->where('id', $request->id)->count() != 1) {
+        if(!$request->id && $donate->where('id', $request->id)->count() != 1) {
             return [
                 'status' => '200',
                 'success' => false,
@@ -19,20 +19,26 @@ class CustomResponseController extends Controller
             ];
         }
         $info = $donate->where('id', $request->id)->first();
-        if($info->hasShow == 0 && $info->verf == 'APPROVED') {
+        if($info->hasShow == 0) {
             Donate::where('id', $request->id)->update([
                 'hasShow' => 1
             ]);
-            return [
-                'status' => '200',
-                'success' => true,
-                'data' => $info
-            ];
+            if($info->verf == 'APPROVED') {
+                return [
+                    'status' => '200',
+                    'success' => true,
+                    'data' => $info
+                ];
+            } else {
+                return [
+                    'status' => '200',
+                    'success' => false,
+                    'message' => $info->description ?? 'There was an error connecting to the bank'
+                ];
+            }
         } else {
             return [
-                'status' => '200',
-                'success' => false,
-                'message' => 'There was an error connecting to the bank'
+                'status' => '201'
             ];
         }
     }
@@ -55,22 +61,29 @@ class CustomResponseController extends Controller
             'verf' => $array['OrderStatus'],
             'name' => $array['CurrencyScr'],
         ]);
+        return redirect()->to('http://localhost:3000/donate-now?id='.$array["ShopOrderId"]);
         return redirect()->to('https://cancerfund.mn/donate-now?id='.$array["ShopOrderId"]);
     }
     public function paymentreject(Request $request, Donate $donate) {
-        // parse xml
-        $xml_data = $request->xmlmsg;
-        $xmlmsg = str_replace("\\\"","\"",$xml_data);
-        $xml = simplexml_load_string($xmlmsg, "SimpleXMLElement", LIBXML_NOCDATA);
-        $json = json_encode($xml);
-        $array = json_decode($json,TRUE);
-        // foreach($array as $arr) {
-        //     echo '<pre>' . var_export($arr, true) . '</pre>';
-        // }
-
-        // $donate->where('id', $array['OrderId'])->update([
-        //     'verf' => 'REJECTED',
-        // ]);
-        return redirect()->to('https://cancerfund.mn/donate-now?id='.$array["ShopOrderId"]);
+        $new = simplexml_load_string($request->xmlmsg);
+        $con = json_encode($new);
+        $newArr = json_decode($con, true);
+        if($donate->where('id', $newArr['ShopOrderId'])->count() != 1) {
+            return redirect()->to('https://cancerfund.mn/donate-now');
+        }
+        $donate->where('id', $newArr['ShopOrderId'])->update([
+            'verf' => $newArr['OrderStatus'],
+            'description' => $newArr['ResponseDescription'],
+            'value' => $newArr['PurchaseAmountScr'],
+            'tranId' => $newArr['TranId'],
+            'card_number' => $newArr['PAN'],
+            'cardHolderName' => $newArr['CardHolderName'],
+            'brand' => $newArr['Brand'],
+            'sessionId' => $newArr['SessionId'],
+            'lang' => $newArr['Language'],
+            'responseCode' => $newArr['ResponseCode'],
+        ]);
+        return redirect()->to('http://localhost:3000/donate-now?id='.$newArr['ShopOrderId']);
+        return redirect()->to('https://cancerfund.mn/donate-now?id='.$newArr['ShopOrderId']);
     }
 }
