@@ -49,8 +49,12 @@ class CustomResponseController extends Controller
     }
 
     public function paymentapprove(Request $request) {
-        echo 'approve';
-        echo '<pre>' . var_export($request, true) . '</pre>';
+        $xml_data = $request->xmlmsg;
+        $xmlmsg = str_replace("\\\"","\"",$xml_data);
+        $xml = simplexml_load_string($xmlmsg, "SimpleXMLElement", LIBXML_NOCDATA);
+        $json = json_encode($xml);
+        $array = json_decode($json,TRUE);
+        var_dump($array);
     }
     public function paymentreject(Request $request) {
         echo 'reject';
