@@ -22,7 +22,7 @@ class CustomResponseController extends Controller
         // var_dump($array);
 
         $xmlmsg = $_POST;
-        echo $xmlmsg;
+        print_r($xmlmsg);
     // $xmlmsg = str_replace("\\\"","\"",$xmlmsg);
     // $xml = simplexml_load_string($xmlmsg, "SimpleXMLElement", LIBXML_NOCDATA);
     // $json = json_encode($xml);
