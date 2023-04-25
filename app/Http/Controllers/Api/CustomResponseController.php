@@ -61,7 +61,6 @@ class CustomResponseController extends Controller
             'verf' => $array['OrderStatus'],
             'name' => $array['CurrencyScr'],
         ]);
-        return redirect()->to('http://localhost:3000/donate-now?id='.$array["ShopOrderId"]);
         return redirect()->to('https://cancerfund.mn/donate-now?id='.$array["ShopOrderId"]);
     }
     public function paymentreject(Request $request, Donate $donate) {
@@ -83,7 +82,6 @@ class CustomResponseController extends Controller
             'lang' => $newArr['Language'],
             'responseCode' => $newArr['ResponseCode'],
         ]);
-        return redirect()->to('http://localhost:3000/donate-now?id='.$newArr['ShopOrderId']);
         return redirect()->to('https://cancerfund.mn/donate-now?id='.$newArr['ShopOrderId']);
     }
 }
