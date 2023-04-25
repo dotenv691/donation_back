@@ -37,8 +37,8 @@ class CustomResponseController extends Controller
         $xml = simplexml_load_string($xmlmsg, "SimpleXMLElement", LIBXML_NOCDATA);
         $json = json_encode($xml);
         $array = json_decode($json,TRUE);
-        echo 'Version: '.$array['Version']."<br>";
         echo 'OrderID: '.$array['OrderID']."<br>";
+        echo 'Version: '.$array['Version']."<br>";
         echo 'TransactionType: '.$array['TransactionType']."<br>";
         echo 'PAN: '.$array['PAN']."<br>";
         echo 'PurchaseAmount: '.$array['PurchaseAmount']."<br>";
@@ -46,7 +46,7 @@ class CustomResponseController extends Controller
         echo 'TranDateTime: '.$array['TranDateTime']."<br>";
         echo 'ResponseCode: '.$array['ResponseCode']."<br>";
         echo 'OrderStatus: '.$array['OrderStatus']."<br>";
-        // echo 'ApprovalCode: '.$array['ApprovalCode']."<br>";
+        echo 'ApprovalCode: '.$array['ApprovalCode']."<br>";
         echo 'MerchantTranID: '.$array['MerchantTranID']."<br>";
         echo 'OrderDescription: '.$array['OrderDescription']."<br>";
         echo 'ApprovalCodeScr: '.$array['ApprovalCodeScr']."<br>";
@@ -54,6 +54,7 @@ class CustomResponseController extends Controller
         echo 'CurrencyScr: '.$array['CurrencyScr']."<br>";
         echo 'OrderStatusScr: '.$array['OrderStatusScr']."<br>";
         // echo 'ThreeDSVerificaion: '.$array['ThreeDSVerificaion']."<br>";
+        echo 'ThreeDSVars : '.$array['ThreeDSVars ']."<br>";
         echo 'ShopOrderId: '.$array['ShopOrderId']."<br>";
     }
     public function paymentreject(Request $request) {
