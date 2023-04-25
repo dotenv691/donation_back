@@ -64,11 +64,12 @@ class CustomResponseController extends Controller
         $xml = simplexml_load_string($xmlmsg, "SimpleXMLElement", LIBXML_NOCDATA);
         $json = json_encode($xml);
         $array = json_decode($json,TRUE);
+        $array['MerchantTranID'];
         foreach($array as $arr) {
             echo '<pre>' . var_export($arr, true) . '</pre>';
         }
 
-        $donate->where('id', $array['ShopOrderId'])->update([
+        $donate->where('id', $array['OrderId'])->update([
             'verf' => 'REJECTED',
         ]);
         echo 'error!';
