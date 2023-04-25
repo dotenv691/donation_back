@@ -11,7 +11,7 @@ class CustomResponseController extends Controller
     public function index(Request $request, Donate $donate) {
 
         // parse xml
-        if(!$request->id || $donate->where('id', $a->id)->count() != 1) {
+        if(!$request->id || $donate->where('id', $request->id)->count() != 1) {
             return [
                 'status' => '200',
                 'success' => false,
