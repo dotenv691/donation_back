@@ -59,12 +59,14 @@ class CustomResponseController extends Controller
     }
     public function paymentreject(Request $request, Donate $donate) {
         // parse xml
-        echo $request->xmlmsg;
         $xml_data = $request->xmlmsg;
         $xmlmsg = str_replace("\\\"","\"",$xml_data);
         $xml = simplexml_load_string($xmlmsg, "SimpleXMLElement", LIBXML_NOCDATA);
         $json = json_encode($xml);
         $array = json_decode($json,TRUE);
+        foreach($array as $arr) {
+            echo $arr;
+        }
 
         $donate->where('id', $array['ShopOrderId'])->update([
             'verf' => 'REJECTED',
