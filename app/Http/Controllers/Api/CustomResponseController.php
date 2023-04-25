@@ -58,6 +58,13 @@ class CustomResponseController extends Controller
         return redirect()->to('http://localhost:3000/donate-now?id='.$array["ShopOrderId"]);
     }
     public function paymentreject(Request $request, Donate $donate) {
+        // parse xml
+        $xml_data = $request->xmlmsg;
+        $xmlmsg = str_replace("\\\"","\"",$xml_data);
+        $xml = simplexml_load_string($xmlmsg, "SimpleXMLElement", LIBXML_NOCDATA);
+        $json = json_encode($xml);
+        $array = json_decode($json,TRUE);
+        
         $donate->where('id', $array['ShopOrderId'])->update([
             'verf' => $array['REJECTED'],
         ]);
