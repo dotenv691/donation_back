@@ -11,15 +11,15 @@ class CustomResponseController extends Controller
         return redirect()->to('http://localhost:3000/donate-now?status=error');
     }
     public function get(Request $request) {
-        echo 'reqs ========> ';
-        echo '<pre>' . var_export($request->xmlmsg, true) . '</pre>';
-// echo $xmlmsg;   
-        // $xml_data = $request->xmlmsg;
-        // $xmlmsg = str_replace("\\\"","\"",$xml_data);
-        // $xml = simplexml_load_string($xmlmsg, "SimpleXMLElement", LIBXML_NOCDATA);
-        // $json = json_encode($xml);
-        // $array = json_decode($json,TRUE);
-        // var_dump($array);
+//         echo 'reqs ========> ';
+//         echo '<pre>' . var_export($request->xmlmsg, true) . '</pre>';
+// // echo $xmlmsg;   
+        $xml_data = $request->xmlmsg;
+        $xmlmsg = str_replace("\\\"","\"",$xml_data);
+        $xml = simplexml_load_string($xmlmsg, "SimpleXMLElement", LIBXML_NOCDATA);
+        $json = json_encode($xml);
+        $array = json_decode($json,TRUE);
+        var_dump($array);
 
         // $xmlmsg = $_POST["xmlmsg"];
     // $xmlmsg = str_replace("\\\"","\"",$xmlmsg);
