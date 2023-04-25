@@ -55,11 +55,11 @@ class CustomResponseController extends Controller
             'verf' => $array['OrderStatus'],
             'name' => $array['CurrencyScr'],
         ]);
-        echo 'success!';
-        // return redirect()->to('http://localhost:3000/donate-now?id='.$array["ShopOrderId"]);
+        return redirect()->to('http://localhost:3000/donate-now?id='.$array["ShopOrderId"]);
     }
     public function paymentreject(Request $request, Donate $donate) {
         // parse xml
+        echo $request->xmlmsg;
         $xml_data = $request->xmlmsg;
         $xmlmsg = str_replace("\\\"","\"",$xml_data);
         $xml = simplexml_load_string($xmlmsg, "SimpleXMLElement", LIBXML_NOCDATA);
