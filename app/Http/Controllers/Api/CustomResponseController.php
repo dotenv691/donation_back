@@ -15,7 +15,7 @@ class CustomResponseController extends Controller
             return [
                 'status' => '200',
                 'success' => false,
-                'message' => 'Bad request'
+                'message' => 'There was an error connecting to the bank'
             ];
         }
         $info = $donate->where('id', $request->id)->first();
