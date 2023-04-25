@@ -54,8 +54,8 @@ class CustomResponseController extends Controller
         echo 'CurrencyScr: '.$array['CurrencyScr']."<br>";
         echo 'OrderStatusScr: '.$array['OrderStatusScr']."<br>";
         // echo 'ThreeDSVerificaion: '.$array['ThreeDSVerificaion']."<br>";
-        echo 'ThreeDSVars : '.$array['ThreeDSVars ']->AnswerVars."<br>";
         echo 'ShopOrderId: '.$array['ShopOrderId']."<br>";
+        echo 'SignatureValue: '.$array['SignatureValue']."<br>";
     }
     public function paymentreject(Request $request) {
         echo 'reject';
