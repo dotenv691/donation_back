@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('donates', function (Blueprint $table) {
             $table->id();
             $table->string('type')->default('USD');
-            $table->double('value');
+            $table->string('value')->default('0.00');
             $table->string('card_number');
             $table->string('exp');
             $table->string('verf');
