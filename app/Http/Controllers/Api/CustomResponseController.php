@@ -44,8 +44,6 @@ class CustomResponseController extends Controller
     }
 
     public function paymentapprove(Request $request, Donate $donate) {
-        echo $request->xmlmsg;
-        return;
         // parse xml
         $xml_data = $request->xmlmsg;
         $xmlmsg = str_replace("\\\"","\"",$xml_data);
@@ -65,8 +63,6 @@ class CustomResponseController extends Controller
         return redirect()->to('https://cancerfund.mn/donate-now?id='.$array["OrderDescription"]);
     }
     public function paymentreject(Request $request, Donate $donate) {
-        echo $request->xmlmsg;
-        return;
         if(!$request->xmlmsg) {
             return redirect()->to('https://cancerfund.mn/donate-now?id=0');
         } else {
