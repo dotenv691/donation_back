@@ -73,6 +73,8 @@ class CustomResponseController extends Controller
             if($donate->where('id', $newArr['ShopOrderId'])->count() != 1) {
                 return redirect()->to('https://cancerfund.mn/donate-now');
             }
+            echo '<pre>' . var_export($newArr, true) . '</pre>';
+            return;
             $donate->where('id', $newArr['ShopOrderId'])->update([
                 'verf' => $newArr['OrderStatus'],
                 'description' => $newArr['ResponseDescription'],
