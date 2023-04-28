@@ -65,14 +65,14 @@ class CustomResponseController extends Controller
         return redirect()->to('https://cancerfund.mn/donate-now?id='.$array["Description"]);
     }
     public function paymentreject(Request $request, Donate $donate) {
-        echo $request->xmlmsg;
-        return;
         if(!$request->xmlmsg) {
             return redirect()->to('https://cancerfund.mn/donate-now?id=0');
         } else {
             $new = simplexml_load_string($request->xmlmsg);
             $con = json_encode($new);
             $newArr = json_decode($con, true);
+            var_dump($newArr);
+            return;
             if($donate->where('id', $newArr['Description'])->count() != 1) {
                 return redirect()->to('https://cancerfund.mn/donate-now');
             }
