@@ -56,7 +56,7 @@ class CustomResponseController extends Controller
         $order_status = "000";
         $currency_str = "USD";
 
-        if($resp->OrderDescription) $id = str_replace(" ", "", strtok($newArr['OrderDescription'], '(')) ?? 0;
+        if($resp->OrderDescription) $id = str_replace(" ", "", strtok($resp->OrderDescription, '(')) ?? 0;
         if($resp->MerchantTranID) $merchant_tran_id = $resp->MerchantTranID ?? 0;
         if($resp->PurchaseAmountScr) $purchase_amount_str = $resp->PurchaseAmountScr ?? "0.00";
         if($resp->ApprovalCodeScr) $approve_code_str = $resp->ApprovalCodeScr ?? "0.00";
