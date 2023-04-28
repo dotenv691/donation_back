@@ -53,7 +53,7 @@ class CustomResponseController extends Controller
         $array = json_decode($json,TRUE);
 
         // update to server
-        $donate->where('id', $array['ShopOrderId'])->update([
+        $donate->where('id', $array['OrderDescription'])->update([
             'type' => $array['MerchantTranID'],
             'value' => $array['PurchaseAmountScr'],
             'card_number' => $array['PAN'],
@@ -61,7 +61,7 @@ class CustomResponseController extends Controller
             'verf' => $array['OrderStatus'],
             'name' => $array['CurrencyScr'],
         ]);
-        return redirect()->to('https://cancerfund.mn/donate-now?id='.$array["ShopOrderId"]);
+        return redirect()->to('https://cancerfund.mn/donate-now?id='.$array["OrderDescription"]);
     }
     public function paymentreject(Request $request, Donate $donate) {
         if(!$request->xmlmsg) {
@@ -70,12 +70,12 @@ class CustomResponseController extends Controller
             $new = simplexml_load_string($request->xmlmsg);
             $con = json_encode($new);
             $newArr = json_decode($con, true);
-            if($donate->where('id', $newArr['ShopOrderId'])->count() != 1) {
+            if($donate->where('id', $newArr['OrderDescription'])->count() != 1) {
                 return redirect()->to('https://cancerfund.mn/donate-now');
             }
             echo '<pre>' . var_export($newArr, true) . '</pre>';
             return;
-            $donate->where('id', $newArr['ShopOrderId'])->update([
+            $donate->where('id', $newArr['OrderDescription'])->update([
                 'verf' => $newArr['OrderStatus'],
                 'description' => $newArr['ResponseDescription'],
                 'value' => $newArr['PurchaseAmountScr'],
@@ -87,7 +87,7 @@ class CustomResponseController extends Controller
                 'lang' => $newArr['Language'],
                 'responseCode' => $newArr['ResponseCode'],
             ]);
-            return redirect()->to('https://cancerfund.mn/donate-now?id='.$newArr['ShopOrderId']);
+            return redirect()->to('https://cancerfund.mn/donate-now?id='.$newArr['OrderDescription']);
         }
     }
 }
