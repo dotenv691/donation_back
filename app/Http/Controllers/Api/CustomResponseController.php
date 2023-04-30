@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Donate;
+use App\Models\ResponseLog;
 
 class CustomResponseController extends Controller
 {
@@ -43,9 +44,19 @@ class CustomResponseController extends Controller
         }
     }
 
-    public function paymentapprove(Request $request, Donate $donate) {
+    public function paymentapprove(Request $request, Donate $donate, ResponseLog $logger) {
         // parse xml
         $resp = simplexml_load_string($request->xmlmsg);
+        $repo = '';
+        $index = 0;
+        foreach ( $resp as $ind => $item ) {
+            if($index == 0) $repo .= '{';
+            $repo .= '"'.$ind.'": "'.$item.'",';
+            $index +=1;
+        }
+        $repo .= '}';
+        $logger->log = $repo;
+        $logger->save();
         // custom variables
         $id = 0;
         $merchant_tran_id = 0;
@@ -79,12 +90,22 @@ class CustomResponseController extends Controller
             return redirect()->to('https://cancerfund.mn/donate-now');
         }
     }
-    public function paymentreject(Request $request, Donate $donate) {
+    public function paymentreject(Request $request, Donate $donate, ResponseLog $logger) {
+
         if(!$request->xmlmsg) {
             return redirect()->to('https://cancerfund.mn/donate-now?id=0');
         } else {
             $resp = simplexml_load_string($request->xmlmsg);
-
+            $repo = '';
+            $index = 0;
+            foreach ( $resp as $ind => $item ) {
+                if($index == 0) $repo .= '{';
+                $repo .= '"'.$ind.'": "'.$item.'",';
+                $index +=1;
+            }
+            $repo .= '}';
+            $logger->log = $repo;
+            $logger->save();
             // custom variables
             $order_status = 0;
             $id = 0;
