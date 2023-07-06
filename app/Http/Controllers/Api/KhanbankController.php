@@ -17,7 +17,6 @@ class KhanbankController extends Controller
                 'message' => 'Please include your amount.'
             ]);
         }
-
         $donate->type = '';
         $donate->value = $request->amount;
         $donate->card_number = '';
@@ -62,10 +61,10 @@ class KhanbankController extends Controller
         $responsearr = explode(',', $response);
         $replace_string = array('"formUrl":"','"}');
         $follow_url = str_replace($replace_string, '',$responsearr[2]);
-        
+
         $replace_string = array('"orderId":"','"');
         $cookie_value = str_replace($replace_string, '',$responsearr[1]);
-        
+
         setcookie('orderId', $cookie_value, time() + (1200), "/");
 
         return response()->json([
