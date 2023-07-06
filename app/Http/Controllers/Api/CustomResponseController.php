@@ -137,66 +137,74 @@ class CustomResponseController extends Controller
         }
     }
     public function paymentreject(Request $request, Donate $donate, ResponseLog $logger) {
-        $qid = $request->orderId ?? 0;
-        $qid = $request->query('orderId');
-        if ($qid == 0) {
-            return redirect()->to('https://cancerfund.mn/donate-now?id=0');
-        }
-
-        header("Access-Control-Allow-Origin: *");
-        $url = "https://acs2.khanbank.com/epg/rest/getOrderStatus.do";
-        //https://epp.khanbank.com/payment/rest/getOrderStatus.do
-
-        $data = array(
-            'language' => 'en',
-            'orderId' => $qid,
-            'userName' => 'CANCERFUNDMN',
-            'password' => 'Vh2s06ks6Z'
-        );
-
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_FAILONERROR, 0);
-        curl_setopt($curl, CURLOPT_HEADER, 0);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 0);
-        curl_setopt($curl, CURLOPT_ENCODING, "UTF-8");
-        curl_setopt($curl, CURLOPT_AUTOREFERER, 1);
-        $response = curl_exec($curl);
-        curl_close($curl);
-
-        $responsearr = explode(',', $response);
-        $replace_string = array('"', '}', '{');
-
-        $repo = '{';
-        $index = 0;
-        $errMessage = 'System error.';
-        foreach ( $responsearr as $ind => $item ) {
-            $parts = explode(":", str_replace($replace_string, '', $item));
-            foreach ($parts as $key => $part) {
-                if($key == 1) $repo .= ' : ';
-                $repo .= '"'.$part.'"';
+        $bank = 'khanbank';
+        if($bank == 'khanbank') {
+            $qid = $request->orderId ?? 0;
+            $qid = $request->query('orderId');
+            if ($qid == 0) {
+                return redirect()->to('https://cancerfund.mn/donate-now?id=0');
             }
-            // if($index == 0) $repo .= '{';
-            // $parts = explode(":", $item);
 
-            $repo .= ', ';
-        }
-        $repo .= '}';
-        // $repo .= '}';
-        echo $repo;
-        // var_dump($responsearr);
-        return;
-        // for ($i = 0; $i < count($responsearr); $i++) {
-        //     echo '<tr><td>';
-        //     $temp = str_replace($replace_string, '', $responsearr[$i]);
-        //     $temp2 = str_replace(':', '</td><td>', $temp);
-        //     echo $temp2 . "</td></tr>";
-        // }
+            header("Access-Control-Allow-Origin: *");
+            $url = "https://acs2.khanbank.com/epg/rest/getOrderStatus.do";
+            //https://epp.khanbank.com/payment/rest/getOrderStatus.do
+
+            $data = array(
+                'language' => 'en',
+                'orderId' => $qid,
+                'userName' => 'CANCERFUNDMN',
+                'password' => 'Vh2s06ks6Z'
+            );
+
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_FAILONERROR, 0);
+            curl_setopt($curl, CURLOPT_HEADER, 0);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 0);
+            curl_setopt($curl, CURLOPT_ENCODING, "UTF-8");
+            curl_setopt($curl, CURLOPT_AUTOREFERER, 1);
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+            $responsearr = explode(',', $response);
+            $replace_string = array('"', '}', '{');
+
+            $repo = '{';
+            $index = 0;
+            $errMessage = 'System error.';
+            foreach ( $responsearr as $ind => $item ) {
+                $parts = explode(":", str_replace($replace_string, '', $item));
+                foreach ($parts as $key => $part) {
+                    if($key == 1) $repo .= ' : ';
+                    $repo .= '"'.$part.'"';
+                }
+                $repo .= ', ';
+            }
+            $repo .= '}';
+            echo $responsearr['OrderNumber'] ?? 0;
+            // return;
+            // if($donate->where('id', $id)->count() != 1) {
+            //     return redirect()->to('https://cancerfund.mn/donate-now');
+            // }
+            // $donate->where('id', $responsearr->OrderNumber)->update([
+            //     'verf' => $order_status,
+            //     'description' => $response_description,
+            //     'value' => $amount_str,
+            //     'tranId' => $tran_id,
+            //     'card_number' => $pan,
+            //     'cardHolderName' => $card_holder_name,
+            //     'brand' => $brand,
+            //     'sessionId' => $session_id,
+            //     'lang' => $language,
+            //     'responseCode' => $response_code,
+            // ]);
+            // return redirect()->to('https://cancerfund.mn/donate-now?id='.$id);
+        } else {
         if(!$request->xmlmsg) {
             return redirect()->to('https://cancerfund.mn/donate-now?id=0');
         } else {
@@ -253,5 +261,6 @@ class CustomResponseController extends Controller
             ]);
             return redirect()->to('https://cancerfund.mn/donate-now?id='.$id);
         }
+     }
     }
 }
