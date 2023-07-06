@@ -94,7 +94,7 @@ class CustomResponseController extends Controller
 
         $array = json_decode($string, true);
 
-        var_dump($array);
+        var_dump($string);
         return;
         // parse xml
         $resp = simplexml_load_string($request->xmlmsg);
@@ -191,7 +191,7 @@ class CustomResponseController extends Controller
 
         $array = json_decode($string, true);
 
-        var_dump($array);
+        var_dump($string);
         return;
         // for ($i = 0; $i < count($responsearr); $i++) {
         //     echo '<tr><td>';
