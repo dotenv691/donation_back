@@ -47,8 +47,6 @@ class CustomResponseController extends Controller
     public function paymentapprove(Request $request, Donate $donate, ResponseLog $logger) {
         $qid = $request->orderId ?? 0;
         $qid = $request->query('orderId');
-        echo $qid;
-        die();
         if ($qid == 0) {
             return redirect()->to('https://cancerfund.mn/donate-now?id=0');
         }
@@ -137,8 +135,6 @@ class CustomResponseController extends Controller
     public function paymentreject(Request $request, Donate $donate, ResponseLog $logger) {
         $qid = $request->orderId ?? 0;
         $qid = $request->query('orderId');
-        echo $qid;
-        die();
         if ($qid == 0) {
             return redirect()->to('https://cancerfund.mn/donate-now?id=0');
         }
