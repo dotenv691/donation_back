@@ -172,20 +172,22 @@ class CustomResponseController extends Controller
         $responsearr = explode(',', $response);
         $replace_string = array('"', '}', '{');
 
-        $repo = '';
+        $repo = '{';
         $index = 0;
         foreach ( $responsearr as $ind => $item ) {
-            echo str_replace($replace_string, '', $item).'<br>';
+            $parts = explode(":", str_replace($replace_string, '', $item));
+            foreach ($parts as $key => $part) {
+                if($key == 1) $repo .= ' : ';
+                $repo .= '"'.$part.'"';
+            }
             // if($index == 0) $repo .= '{';
             // $parts = explode(":", $item);
-            // foreach ($parts as $key => $part) {
-            //     if($key == 1) $repo .= ' : ';
-            //     $repo .= '"'.$part.'"';
-            // }
-            // $repo .= ', ';
+
+            $repo .= ', ';
         }
+        $repo = '}';
         // $repo .= '}';
-        // echo $repo;
+        echo $repo;
         // var_dump($responsearr);
         return;
         // for ($i = 0; $i < count($responsearr); $i++) {
