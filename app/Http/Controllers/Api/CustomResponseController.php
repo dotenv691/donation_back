@@ -174,11 +174,25 @@ class CustomResponseController extends Controller
 
         $repo = '{';
         $index = 0;
+        $errMessage = 'System error.';
         foreach ( $responsearr as $ind => $item ) {
             $parts = explode(":", str_replace($replace_string, '', $item));
             foreach ($parts as $key => $part) {
                 if($key == 1) $repo .= ' : ';
-                $repo .= '"'.$part.'"';
+                if($key == 1 && $part[0] == 'ErrorCode') {
+                    if($part == 0) $errMessage = 'No system error.';
+                    elseif($part == 1) $errMessage = 'Order with this number is already registered in the system ::: Order with this number was already processed. ::: Order with this number was registered, but was not paid off.';
+                    elseif($part == 3) $errMessage = 'Unknown or forbidden currency ::: Wrong currency.';
+                    elseif($part == 4) $errMessage = 'Mandatory request parameter was not specified. ::: No Currency field in the request. ::: No Language parameter in the request.::: Order number cannot be empty. ::: Merchant name cannot be empty. ::: No amount specified. ::: Return URL cannot be empty. ::: Password cannot be empty.';
+                    elseif($part == 5) $errMessage = 'Erroneous value of a request parameter. ::: Wrong amount ::: Wrong order number. ::: Unknown name of the merchant. ::: Wrong value of the Language parameter ::: Wrong OrderId. ::: Wrong password for the merchant. ::: Specified user is inactive.';
+                    $repo .= '"'.$errMessage.'"';
+                } else {
+                    $repo .= '"'.$part.'"';
+                }
+
+
+
+
             }
             // if($index == 0) $repo .= '{';
             // $parts = explode(":", $item);
