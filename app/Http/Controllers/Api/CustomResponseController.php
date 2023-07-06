@@ -179,7 +179,7 @@ class CustomResponseController extends Controller
         }
         $array = json_decode($repo, true);
 
-        var_dump($repo);
+        var_dump($array);
         return;
         // for ($i = 0; $i < count($responsearr); $i++) {
         //     echo '<tr><td>';
