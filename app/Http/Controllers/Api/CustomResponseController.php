@@ -177,7 +177,6 @@ class CustomResponseController extends Controller
         foreach ( $responsearr as $item ) {
             $repo .= $item.',';
         }
-        $repo .= '}';
         $array = json_decode($repo, true);
 
         var_dump($repo);
