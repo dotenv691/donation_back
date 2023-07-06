@@ -80,12 +80,15 @@ class CustomResponseController extends Controller
         $responsearr = explode(',', $response);
         $replace_string = array('"', '}', '{');
 
-        for ($i = 0; $i < count($responsearr); $i++) {
-            echo '<tr><td>';
-            $temp = str_replace($replace_string, '', $responsearr[$i]);
-            $temp2 = str_replace(':', '</td><td>', $temp);
-            echo $temp2 . "</td></tr>";
+        $repo = '';
+        $index = 0;
+        foreach ( $responsearr as $ind => $item ) {
+            if($index == 0) $repo .= '{';
+            $repo .= '"'.$ind.'": "'.$item.'",';
+            $index +=1;
         }
+        $repo .= '}';
+        echo $repo;
         return;
         // parse xml
         $resp = simplexml_load_string($request->xmlmsg);
@@ -168,13 +171,22 @@ class CustomResponseController extends Controller
         $responsearr = explode(',', $response);
         $replace_string = array('"', '}', '{');
 
-        for ($i = 0; $i < count($responsearr); $i++) {
-            echo '<tr><td>';
-            $temp = str_replace($replace_string, '', $responsearr[$i]);
-            $temp2 = str_replace(':', '</td><td>', $temp);
-            echo $temp2 . "</td></tr>";
+        $repo = '';
+        $index = 0;
+        foreach ( $responsearr as $ind => $item ) {
+            if($index == 0) $repo .= '{';
+            $repo .= '"'.$ind.'": "'.$item.'",';
+            $index +=1;
         }
+        $repo .= '}';
+        echo $repo;
         return;
+        // for ($i = 0; $i < count($responsearr); $i++) {
+        //     echo '<tr><td>';
+        //     $temp = str_replace($replace_string, '', $responsearr[$i]);
+        //     $temp2 = str_replace(':', '</td><td>', $temp);
+        //     echo $temp2 . "</td></tr>";
+        // }
         if(!$request->xmlmsg) {
             return redirect()->to('https://cancerfund.mn/donate-now?id=0');
         } else {
