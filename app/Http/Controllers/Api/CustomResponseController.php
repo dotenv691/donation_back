@@ -186,7 +186,10 @@ class CustomResponseController extends Controller
                 $repo .= ', ';
             }
             $repo .= '}';
-
+            $parts = explode(",}", $repo);
+            foreach ($parts as $key => $part) {
+                if($key == 0) $repo = $part.'}';
+            }
             $array = json_decode($repo, true);
 
             var_dump($array);
