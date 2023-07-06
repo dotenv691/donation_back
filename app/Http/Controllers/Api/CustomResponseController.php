@@ -175,16 +175,17 @@ class CustomResponseController extends Controller
         $repo = '';
         $index = 0;
         foreach ( $responsearr as $ind => $item ) {
-            if($index == 0) $repo .= '{';
-            $parts = explode(":", $item);
-            foreach ($parts as $key => $part) {
-                if($key == 1) $repo .= ' : ';
-                $repo .= '"'.$part.'"';
-            }
-            $repo .= ', ';
+            echo $item[0];
+            // if($index == 0) $repo .= '{';
+            // $parts = explode(":", $item);
+            // foreach ($parts as $key => $part) {
+            //     if($key == 1) $repo .= ' : ';
+            //     $repo .= '"'.$part.'"';
+            // }
+            // $repo .= ', ';
         }
-        $repo .= '}';
-        echo $repo;
+        // $repo .= '}';
+        // echo $repo;
         // var_dump($responsearr);
         return;
         // for ($i = 0; $i < count($responsearr); $i++) {
