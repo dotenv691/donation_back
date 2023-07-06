@@ -187,7 +187,7 @@ class CustomResponseController extends Controller
             }
             $repo .= '}';
 
-            $mergedString = implode(',', $responsearr);
+            $mergedString = implode(',', $repo ?? []);
             $mergedString = "{" . $mergedString . "}";
             $data = json_decode($mergedString, true);
 
