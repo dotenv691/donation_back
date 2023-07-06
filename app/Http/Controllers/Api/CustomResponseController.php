@@ -187,13 +187,7 @@ class CustomResponseController extends Controller
             }
             $repo .= '}';
 
-            $mergedString = implode(',', $repo ?? []);
-            $mergedString = "{" . $mergedString . "}";
-            $data = json_decode($mergedString, true);
-
-            // $orderNumber = $data['OrderNumber'];
-
-            echo '<pre>' . var_export($data, true) . '</pre>';
+            echo $repo;
             // return;
             // if($donate->where('id', $id)->count() != 1) {
             //     return redirect()->to('https://cancerfund.mn/donate-now');
