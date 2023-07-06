@@ -86,11 +86,7 @@ class CustomResponseController extends Controller
             $repo .= $item.',';
         }
         $repo .= '}';
-        $string = str_replace(['{', '}'], ['{"', '"}'], $repo);
-        $string = str_replace(':', '":"', $string);
-        $string = str_replace(',', '","', $string);
-
-        $array = json_decode($string, true);
+        $array = json_decode($repo, true);
 
         var_dump($array);
         return;
@@ -182,11 +178,7 @@ class CustomResponseController extends Controller
             $repo .= $item.',';
         }
         $repo .= '}';
-        $string = str_replace(['{', '}'], ['{"', '"}'], $repo);
-        $string = str_replace(':', '":"', $string);
-        $string = str_replace(',', '","', $string);
-
-        $array = json_decode($string, true);
+        $array = json_decode($repo, true);
 
         var_dump($array);
         return;
