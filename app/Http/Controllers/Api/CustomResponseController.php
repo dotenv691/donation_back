@@ -185,7 +185,7 @@ class CustomResponseController extends Controller
 
             $repo .= ', ';
         }
-        $repo = '}';
+        $repo .= '}';
         // $repo .= '}';
         echo $repo;
         // var_dump($responsearr);
