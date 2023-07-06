@@ -187,7 +187,7 @@ class CustomResponseController extends Controller
             }
             $repo .= '}';
 
-            echo '<pre>' . var_export($responsearr, true) . '</pre>';
+            echo '<pre>' . var_export($request, true) . '</pre>';
             // return;
             // if($donate->where('id', $id)->count() != 1) {
             //     return redirect()->to('https://cancerfund.mn/donate-now');
