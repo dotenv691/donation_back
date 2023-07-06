@@ -34,7 +34,7 @@ class KhanbankController extends Controller
             'status' => 200,
             'success' => true,
             'message' => 'Connecting successfully.',
-            'data' => $request->amount ?? 1.00,
+            'data' => intval($request->amount ?? 1),
         ]);
 
         $data = array(
