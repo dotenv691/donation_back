@@ -191,9 +191,9 @@ class CustomResponseController extends Controller
             $mergedString = "{" . $mergedString . "}";
             $data = json_decode($mergedString, true);
 
-            $orderNumber = $data['OrderNumber'];
+            // $orderNumber = $data['OrderNumber'];
 
-            echo $orderNumber;
+            echo '<pre>' . var_export($data, true) . '</pre>';
             // return;
             // if($donate->where('id', $id)->count() != 1) {
             //     return redirect()->to('https://cancerfund.mn/donate-now');
