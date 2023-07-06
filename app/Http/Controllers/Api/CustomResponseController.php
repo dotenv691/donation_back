@@ -82,11 +82,8 @@ class CustomResponseController extends Controller
 
         $repo = '';
         $index = 0;
-        foreach ( $responsearr as $ind => $item ) {
-            echo $item.'<br>';
-            if($index == 0) $repo .= '{';
+        foreach ( $responsearr as $item ) {
             $repo .= $item.',';
-            $index +=1;
         }
         $repo .= '}';
         $string = str_replace(['{', '}'], ['{"', '"}'], $repo);
@@ -95,7 +92,7 @@ class CustomResponseController extends Controller
 
         $array = json_decode($string, true);
 
-        // var_dump($string);
+        var_dump($array);
         return;
         // parse xml
         $resp = simplexml_load_string($request->xmlmsg);
@@ -181,11 +178,8 @@ class CustomResponseController extends Controller
 
         $repo = '';
         $index = 0;
-        foreach ( $responsearr as $ind => $item ) {
-            echo $item.'<br>';
-            if($index == 0) $repo .= '{';
-                $repo .= $item.',';
-            $index +=1;
+        foreach ( $responsearr as $item ) {
+            $repo .= $item.',';
         }
         $repo .= '}';
         $string = str_replace(['{', '}'], ['{"', '"}'], $repo);
@@ -194,7 +188,7 @@ class CustomResponseController extends Controller
 
         $array = json_decode($string, true);
 
-        // var_dump($string);
+        var_dump($array);
         return;
         // for ($i = 0; $i < count($responsearr); $i++) {
         //     echo '<tr><td>';
