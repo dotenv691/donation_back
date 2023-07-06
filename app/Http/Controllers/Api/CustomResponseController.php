@@ -96,7 +96,7 @@ class CustomResponseController extends Controller
         $index = 0;
         foreach ( $resp as $ind => $item ) {
             if($index == 0) $repo .= '{';
-            $repo .= '"'.$ind.'": "'.$item.'",';
+            $repo .= '"'.str_replace($replace_string, '', $ind).'": "'.str_replace($replace_string, '', $item).'",';
             $index +=1;
         }
         $repo .= '}';
@@ -175,7 +175,7 @@ class CustomResponseController extends Controller
         $index = 0;
         foreach ( $responsearr as $ind => $item ) {
             if($index == 0) $repo .= '{';
-            $repo .= '"'.$ind.'": "'.$item.'",';
+            $repo .= '"'.str_replace($replace_string, '', $ind).'": "'.str_replace($replace_string, '', $item).'",';
             $index +=1;
         }
         $repo .= '}';
