@@ -88,7 +88,13 @@ class CustomResponseController extends Controller
             $index +=1;
         }
         $repo .= '}';
-        echo $repo;
+        $string = str_replace(['{', '}'], ['{"', '"}'], $repo);
+        $string = str_replace(':', '":"', $string);
+        $string = str_replace(',', '","', $string);
+
+        $array = json_decode($string, true);
+
+        var_dump($array);
         return;
         // parse xml
         $resp = simplexml_load_string($request->xmlmsg);
@@ -179,7 +185,13 @@ class CustomResponseController extends Controller
             $index +=1;
         }
         $repo .= '}';
-        echo $repo;
+        $string = str_replace(['{', '}'], ['{"', '"}'], $repo);
+        $string = str_replace(':', '":"', $string);
+        $string = str_replace(',', '","', $string);
+
+        $array = json_decode($string, true);
+
+        var_dump($array);
         return;
         // for ($i = 0; $i < count($responsearr); $i++) {
         //     echo '<tr><td>';
