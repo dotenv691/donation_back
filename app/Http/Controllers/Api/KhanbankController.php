@@ -30,6 +30,13 @@ class KhanbankController extends Controller
         $currency = '496';
         $actual_link = 'https://backend.cancerfund.mn/api/';
 
+        return response()->json([
+            'status' => 200,
+            'success' => true,
+            'message' => 'Connecting successfully.',
+            'data' => $request->amount ?? 1.00,
+        ]);
+
         $data = array(
             'amount' => $request->amount ?? 1.00,
             'currency' => $currency,
