@@ -189,7 +189,7 @@ class CustomResponseController extends Controller
 
             $array = json_decode($repo, true);
 
-            print_r($array);
+            var_dump($array);
             // return;
             // if($donate->where('id', $id)->count() != 1) {
             //     return redirect()->to('https://cancerfund.mn/donate-now');
