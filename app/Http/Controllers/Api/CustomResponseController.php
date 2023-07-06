@@ -140,7 +140,6 @@ class CustomResponseController extends Controller
         $bank = 'khanbank';
         if($bank == 'khanbank') {
             $qid = $request->orderId ?? 0;
-            $qid = $request->query('orderId');
             if ($qid == 0) {
                 return redirect()->to('https://cancerfund.mn/donate-now?id=0');
             }
@@ -177,41 +176,45 @@ class CustomResponseController extends Controller
             $repo = '{';
             $index = 0;
             $errMessage = 'System error.';
-            foreach ( $responsearr as $ind => $item ) {
+            foreach ($responsearr as $ind => $item) {
                 $parts = explode(":", str_replace($replace_string, '', $item));
                 foreach ($parts as $key => $part) {
-                    if($key == 1) $repo .= ' : ';
-                    $repo .= '"'.$part.'"';
+                    if ($key == 1) {
+                        $repo .= ' : ';
+                    }
+                    $repo .= '"' . $part . '"';
                 }
                 $repo .= ', ';
             }
             $repo .= '}';
             $parts = explode(", }", $repo);
             foreach ($parts as $key => $part) {
-                if($key == 0) $repo = $part.'}';
+                if ($key == 0) {
+                    $repo = $part . '}';
+                }
             }
             $array = json_decode($repo, true);
 
-            // var_dump($array);
-            echo $array->xaxa ?? 47.0;
-            // echo $repo;
-            // return;
-            // if($donate->where('id', $id)->count() != 1) {
-            //     return redirect()->to('https://cancerfund.mn/donate-now');
-            // }
-            // $donate->where('id', $responsearr->OrderNumber)->update([
-            //     'verf' => $order_status,
-            //     'description' => $response_description,
-            //     'value' => $amount_str,
-            //     'tranId' => $tran_id,
-            //     'card_number' => $pan,
-            //     'cardHolderName' => $card_holder_name,
-            //     'brand' => $brand,
-            //     'sessionId' => $session_id,
-            //     'lang' => $language,
-            //     'responseCode' => $response_code,
-            // ]);
-            // return redirect()->to('https://cancerfund.mn/donate-now?id='.$id);
+            $donateId = $array['OrderNumber'] ?? 0;
+            if ($donate->where('id', $donateId)->count() != 1) {
+                return redirect()->to('https://cancerfund.mn/donate-now');
+            }
+
+            $donate->where('id', $donateId)->update([
+                'verf' => 'failed',
+                'description' => $array['ErrorMessage'] ?? $errMessage,
+                'value' => substr($array['Amount'] ?? 100, 0, -2) . '.' . substr($array['Amount'] ?? 100, -2),
+                'tranId' => $qid,
+                'card_number' => $array['Pan'] ?? null,
+                'cardHolderName' => $array['cardholderName'] ?? null,
+                'brand' => 'khanbank',
+                'sessionId' => $array['Ip'] ?? '',
+                'lang' => $array['currency'] ?? '496',
+                'responseCode' => $array['ErrorCode'] ?? '0',
+            ]);
+
+            return redirect()->to('https://cancerfund.mn/donate-now?id=' . $donateId);
+
         } else {
         if(!$request->xmlmsg) {
             return redirect()->to('https://cancerfund.mn/donate-now?id=0');
