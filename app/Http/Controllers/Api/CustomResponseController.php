@@ -179,8 +179,8 @@ class CustomResponseController extends Controller
             $parts = explode(":", str_replace($replace_string, '', $item));
             foreach ($parts as $key => $part) {
                 if($key == 1) $repo .= ' : ';
-                if($key == 1 && $part[0] == 'ErrorCode') {
-                    echo 'end ajilsoo!';
+                if($key == 1) {
+                    echo $part[0];
                     if($part == '0') $errMessage = 'No system error.';
                     elseif($part == '1') $errMessage = 'Order with this number is already registered in the system ::: Order with this number was already processed. ::: Order with this number was registered, but was not paid off.';
                     elseif($part == '2') $errMessage = 'The order is declined because of an error in the payment
