@@ -45,51 +45,51 @@ class CustomResponseController extends Controller
     }
 
     public function paymentapprove(Request $request, Donate $donate, ResponseLog $logger) {
-        $qid = $request->orderId ?? 0;
-        $qid = $request->query('orderId');
-        if ($qid == 0) {
-            return redirect()->to('https://cancerfund.mn/donate-now?id=0');
-        }
+        // $qid = $request->orderId ?? 0;
+        // $qid = $request->query('orderId');
+        // if ($qid == 0) {
+        //     return redirect()->to('https://cancerfund.mn/donate-now?id=0');
+        // }
 
-        header("Access-Control-Allow-Origin: *");
-        $url = "https://acs2.khanbank.com/epg/rest/getOrderStatus.do";
-        //https://epp.khanbank.com/payment/rest/getOrderStatus.do
+        // header("Access-Control-Allow-Origin: *");
+        // $url = "https://acs2.khanbank.com/epg/rest/getOrderStatus.do";
+        // //https://epp.khanbank.com/payment/rest/getOrderStatus.do
 
-        $data = array(
-            'language' => 'en',
-            'orderId' => $qid,
-            'userName' => 'CANCERFUNDMN',
-            'password' => 'Vh2s06ks6Z'
-        );
+        // $data = array(
+        //     'language' => 'en',
+        //     'orderId' => $qid,
+        //     'userName' => 'CANCERFUNDMN',
+        //     'password' => 'Vh2s06ks6Z'
+        // );
 
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_FAILONERROR, 0);
-        curl_setopt($curl, CURLOPT_HEADER, 0);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 0);
-        curl_setopt($curl, CURLOPT_ENCODING, "UTF-8");
-        curl_setopt($curl, CURLOPT_AUTOREFERER, 1);
-        $response = curl_exec($curl);
-        curl_close($curl);
+        // $curl = curl_init();
+        // curl_setopt($curl, CURLOPT_FAILONERROR, 0);
+        // curl_setopt($curl, CURLOPT_HEADER, 0);
+        // curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        // curl_setopt($curl, CURLOPT_URL, $url);
+        // curl_setopt($curl, CURLOPT_POST, 1);
+        // curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        // curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 0);
+        // curl_setopt($curl, CURLOPT_ENCODING, "UTF-8");
+        // curl_setopt($curl, CURLOPT_AUTOREFERER, 1);
+        // $response = curl_exec($curl);
+        // curl_close($curl);
 
-        $responsearr = explode(',', $response);
-        $replace_string = array('"', '}', '{');
+        // $responsearr = explode(',', $response);
+        // $replace_string = array('"', '}', '{');
 
-        $repo = '';
-        $index = 0;
-        foreach ( $responsearr as $item ) {
-            $repo .= $item.',';
-        }
-        $repo .= '}';
-        $array = json_decode($repo, true);
+        // $repo = '';
+        // $index = 0;
+        // foreach ( $responsearr as $item ) {
+        //     $repo .= $item.',';
+        // }
+        // $repo .= '}';
+        // $array = json_decode($repo, true);
 
-        var_dump($array);
-        return;
+        // var_dump($array);
+        // return;
         // parse xml
         $resp = simplexml_load_string($request->xmlmsg);
         $repo = '';
@@ -97,7 +97,7 @@ class CustomResponseController extends Controller
         foreach ( $resp as $ind => $item ) {
 
             if($index == 0) $repo .= '{';
-            $repo .= str_replace($replace_string, '', $item).'",';
+            $repo .= '"'.$ind.'": "'.$item.'",';
             $index +=1;
         }
         $repo .= '}';
