@@ -193,7 +193,7 @@ class CustomResponseController extends Controller
             $array = json_decode($repo, true);
 
             // var_dump($array);
-            echo $array->xaxa ?? 0.00;
+            echo $array->xaxa ?? 47.0;
             // echo $repo;
             // return;
             // if($donate->where('id', $id)->count() != 1) {
