@@ -31,7 +31,7 @@ class KhanbankController extends Controller
         $actual_link = 'https://backend.cancerfund.mn/api/';
 
         $data = array(
-            'amount' => $request->amount.'00' ?? 1.00,
+            'amount' => $request->amount ?? 1.00,
             'currency' => $currency,
             'language' => $language,
             'orderNumber' => $donate->id,
